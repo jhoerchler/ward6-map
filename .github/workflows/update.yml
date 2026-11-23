@@ -1,0 +1,86 @@
+# Rebuilds the ward map's data and republishes the site on GitHub Pages.
+#
+# Every two hours: the city's live API (last ~14 days) is re-read, so new
+# requests show up within a couple of hours. The 126 MB bulk export is only
+# re-downloaded once per day (cached between runs, keyed by date); if the
+# city's download fails, yesterday's cached copy is used instead.
+#
+# Repo settings this needs (one time):
+#   Settings -> Pages -> Source: "GitHub Actions"
+#   Settings -> Secrets and variables -> Actions -> New secret: CSB_API_KEY
+#   (optional) Variables -> WARDS = "6" or e.g. "6,7"
+
+name: Update ward map
+
+on:
+  schedule:
+    - cron: "17 */2 * * *"   # off the top of the hour, when Actions is busiest
+  workflow_dispatch: {}      # "Run workflow" button
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Today's date (Central)
+        id: day
+        run: echo "day=$(TZ=America/Chicago date +%F)" >> "$GITHUB_OUTPUT"
+
+      - name: Restore the city's bulk export
+        id: zipcache
+        uses: actions/cache/restore@v4
+        with:
+          path: cache/csb.zip
+          key: csb-zip-${{ steps.day.outputs.day }}
+          restore-keys: csb-zip-
+
+      - name: Build
+        env:
+          CSB_API_KEY: ${{ secrets.CSB_API_KEY }}
+          WARDS: ${{ vars.WARDS || '6' }}
+        run: |
+          if [ "${{ steps.zipcache.outputs.cache-hit }}" = "true" ]; then
+            python build.py
+          else
+            python build.py --download
+          fi
+
+      - name: Save today's bulk export
+        if: steps.zipcache.outputs.cache-hit != 'true' && hashFiles('cache/downloaded') != ''
+        uses: actions/cache/save@v4
+        with:
+          path: cache/csb.zip
+          key: csb-zip-${{ steps.day.outputs.day }}
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
