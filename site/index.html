@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ward 6 service request map</title>
+<meta name="description" content="Citizens' Service Bureau requests in Ward 6, St. Louis, on an interactive map, updated from the city's own data.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="embed.css">
+</head>
+<!-- The ward map, published by GitHub Pages and framed by the ward office's
+     RUN! page. Data comes from data/ward<N>.json, rebuilt by the workflow in
+     .github/workflows/update.yml. ?ward=N picks another ward. -->
+<body data-ward="6" data-name="Ward 6">
+
+<div class="app" id="app">
+  <aside class="panel" id="panel" aria-label="Filters and results">
+    <header class="ph">
+      <div class="ph-title">
+        <h1>Ward 6 Service Requests</h1>
+        <p class="sub" id="freshness" aria-live="polite">Loading the city's data…</p>
+      </div>
+      <button type="button" class="sheet-toggle" id="sheetToggle" aria-expanded="false" aria-controls="panel">
+        <span class="when-closed">Filters &amp; list</span><span class="when-open">Show map</span>
+      </button>
+    </header>
+
+    <div class="pbody">
+      <div class="search">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        <input id="q" type="search" placeholder="Search an address or problem" autocomplete="off" aria-label="Search requests by address or problem">
+      </div>
+
+      <div class="row">
+        <div class="seg" role="radiogroup" aria-label="Status">
+          <button type="button" role="radio" data-status="open" aria-checked="true">Open</button>
+          <button type="button" role="radio" data-status="closed" aria-checked="false">Resolved</button>
+          <button type="button" role="radio" data-status="all" aria-checked="false">All</button>
+        </div>
+        <select id="days" aria-label="Time window">
+          <option value="30">Last 30 days</option>
+          <option value="90" selected>Last 90 days</option>
+          <option value="365">Last 12 months</option>
+        </select>
+      </div>
+
+      <div class="cats-head">
+        <span>Categories</span>
+        <button type="button" class="link" id="catsAll">Show all</button>
+      </div>
+      <div class="cats" id="cats" role="group" aria-label="Request categories"></div>
+
+      <div class="list-head">
+        <span id="count">—</span>
+        <button type="button" class="link" id="nearMe">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="8"/></svg>
+          Near me
+        </button>
+      </div>
+      <ol class="list" id="list" aria-label="Requests"></ol>
+      <button type="button" class="more" id="more" hidden>Show more</button>
+    </div>
+
+    <footer class="pf">
+      <a class="cta" href="https://www.stlouis-mo.gov/government/departments/public-safety/neighborhood-stabilization-office/citizens-service-bureau/csb-request-submit.cfm" target="_blank" rel="noopener">Report a problem to the CSB</a>
+      <p class="fine">Data: City of St. Louis Citizens' Service Bureau. Locations are where the city logged each request.</p>
+    </footer>
+  </aside>
+
+  <main class="mapwrap">
+    <div id="map" role="region" aria-label="Map of Ward 6 service requests"></div>
+    <div class="stepper" id="stepper" hidden>
+      <button type="button" id="prev" aria-label="Previous request">&#8249; Prev</button>
+      <span id="stepPos"></span>
+      <button type="button" id="next" aria-label="Next request">Next &#8250;</button>
+    </div>
+    <div class="toast" id="toast" role="status" hidden></div>
+  </main>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="embed.js"></script>
+</body>
+</html>
