@@ -54,7 +54,7 @@ Add a **Custom Code / Embed** block and paste:
 Set the block's height (desktop / tablet / phone), e.g. 650 / 650 / 600 px.
 RUN!'s editor disables scripts, so check it on the published page.
 
-URL options: `?ward=7` (if built), `?accent=1f4e79` (button/outline colour),
+URL options: `?ward=7` (if built), `?accent=032673` (outline/selected colour; default is the ward site's navy),
 `?status=open|closed|all`, `?days=30|90|365`, `?cat=trash,streets`.
 
 ## Things to know

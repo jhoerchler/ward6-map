@@ -4,7 +4,7 @@
  * draws a lighter, category-first view of it for an iframe on another site.
  * Optional URL parameters, so the host page can tune it without a code
  * change:
- *   ?accent=1f4e79        button / outline colour (hex, no #)
+ *   ?accent=032673        outline / selected colour (default: ward navy) (hex, no #)
  *   ?status=open|closed|all
  *   ?days=30|90|365
  *   ?cat=trash,streets    only these categories switched on at first
@@ -136,10 +136,10 @@
 
   function drawBoundary(fc) {
     if (boundaryDrawn || !fc || !fc.features || !fc.features.length) return;
-    var accentColor = getComputedStyle(document.documentElement).getPropertyValue("--accent").trim() || "#1f4e79";
+    var accentColor = getComputedStyle(document.documentElement).getPropertyValue("--accent").trim() || "#032673";
     var layer = L.geoJSON(fc, {
       interactive: false,
-      style: { color: accentColor, weight: 2.5, fill: true, fillColor: accentColor, fillOpacity: 0.04, dashArray: "6 4" }
+      style: { color: accentColor, weight: 3, fill: true, fillColor: "#f3db11", fillOpacity: 0.07, dashArray: "8 5" }
     }).addTo(map);
     map.fitBounds(layer.getBounds(), { padding: [12, 12] });
     boundaryDrawn = true;
