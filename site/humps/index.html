@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="theme-color" content="#032673">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>6th Ward speed hump map</title>
+<meta name="description" content="Every known speed hump in St. Louis's 6th Ward, and citywide, from Board of Aldermen ordinances and OpenStreetMap.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="humps.css">
+</head>
+<!-- Speed hump map, framed by (or linked from) the 6th Ward site. Data is a
+     static snapshot in humps.json, built from STL_Speed_Bumps/speed_hump_sites.csv.
+     ?scope=city opens on the whole city instead of Ward 6. -->
+<body>
+
+<header class="bar">
+  <div class="bar-title">
+    <h1 id="title">6th Ward Speed Humps</h1>
+    <p class="sub" id="sub">Loading…</p>
+  </div>
+  <div class="seg" role="radiogroup" aria-label="Area shown">
+    <button type="button" role="radio" data-scope="ward" aria-checked="true">Ward 6</button>
+    <button type="button" role="radio" data-scope="city" aria-checked="false">Whole city</button>
+  </div>
+</header>
+
+<main class="mapwrap">
+  <div id="map" role="region" aria-label="Map of speed humps"></div>
+
+  <section class="legend" id="legend" aria-label="Legend">
+    <button type="button" class="legend-toggle" id="legendToggle" aria-expanded="true">Legend</button>
+    <div class="legend-body" id="legendBody">
+      <p class="legend-head">Year the ordinance took effect</p>
+      <div id="legendItems" role="group" aria-label="Filter by year"></div>
+      <p class="legend-note">Tap a year to hide or show it. Outlined dots are placed approximately.</p>
+      <p class="legend-note disclaimer"><strong>Not a complete list.</strong> St. Louis has no official speed hump inventory. These sites come from Board of Aldermen ordinances (2021 on) and humps people have mapped on OpenStreetMap, so some humps are missing.</p>
+    </div>
+  </section>
+
+  <a class="cta" href="https://www.stlouis-mo.gov/government/departments/aldermen/documents/6th-ward-speed-hump.cfm" target="_blank" rel="noopener">Request a speed hump</a>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="humps.js"></script>
+</body>
+</html>
