@@ -72,13 +72,18 @@ body.embed .bar { display: none; }
 .bill .sum.clamp { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 .more { border: 0; background: none; padding: 0; color: var(--red); font-weight: 700; font-size: 13px; cursor: pointer; }
 
-.prog { display: flex; gap: 3px; margin: 8px 0 4px; }
-.prog span { flex: 1; height: 6px; background: #e4e7ee; border-radius: 2px; }
+.prog { display: flex; gap: 2px; margin: 8px 0 4px; }
+/* Each step is a chevron pointing to the next one. */
+.prog span { flex: 1; height: 14px; background: #e4e7ee;
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 50%, calc(100% - 8px) 100%, 0 100%, 8px 50%); }
+.prog span:first-child { clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 50%, calc(100% - 8px) 100%, 0 100%); }
+.prog span:last-child { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 8px 50%); }
 .prog span.on { background: var(--navy); }
 .bill.s-law .prog span.on { background: var(--green); }
 .prog-l { display: flex; justify-content: space-between; font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .03em; }
-.prog-l span { flex: 1; }
-.prog-l span:last-child { text-align: right; }
+.prog-l span { flex: 1; text-align: center; padding: 0 4px; }
+.prog-l span:first-child { text-align: left; padding-left: 0; }
+.prog-l span:last-child { text-align: right; padding-right: 0; }
 
 .last { margin: 8px 0 0; font-size: 13px; }
 .last strong { color: var(--navy); }
