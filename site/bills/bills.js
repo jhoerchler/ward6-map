@@ -122,9 +122,11 @@
   function render() {
     var bills = D.bills.filter(matches);
     $("list").innerHTML = bills.length ? bills.map(card).join("") : '<li class="empty">No bills match these filters.</li>';
-    $("count").textContent = bills.length + " of " + D.bills.length + " bills";
-
     var scope = D.bills.filter(function (b) { return F.session === "all" || b.session === F.session; });
+    var when = F.session === "all" ? "all time"
+      : F.session === D.current_session ? "this session (" + F.session + ")"
+      : "the " + F.session + " session";
+    $("count").textContent = bills.length + " of " + scope.length + " bills, " + when;
     var n = function (fn) { return scope.filter(fn).length; };
     $("stats").innerHTML = [
       ["", n(function (b) { return b.role === "sponsor"; }), "Sponsored"],
