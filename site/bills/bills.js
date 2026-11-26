@@ -120,6 +120,11 @@
   }
 
   function render() {
+    // The controls are the source of truth: browsers (Firefox especially)
+    // restore form values on reload/back without firing change events.
+    var sel = $("session");
+    F.session = D.sessions.indexOf(sel.value) >= 0 ? sel.value : "all";
+    F.q = $("q").value.trim();
     var bills = D.bills.filter(matches);
     $("list").innerHTML = bills.length ? bills.map(card).join("") : '<li class="empty">No bills match these filters.</li>';
     var scope = D.bills.filter(function (b) { return F.session === "all" || b.session === F.session; });
@@ -164,9 +169,11 @@
       }).join("");
       if (d.sessions.indexOf(F.session) < 0) F.session = "all";
       sel.value = F.session;
-      sel.addEventListener("change", function () { F.session = sel.value; render(); });
+      sel.addEventListener("change", render);
+      sel.addEventListener("input", render);
+      window.addEventListener("pageshow", function () { if (D) render(); });
       var q = $("q"); q.value = F.q;
-      var t; q.addEventListener("input", function () { clearTimeout(t); t = setTimeout(function () { F.q = q.value.trim(); render(); }, 150); });
+      var t; q.addEventListener("input", function () { clearTimeout(t); t = setTimeout(render, 150); });
       bindSeg("roleSeg", "role", "data-role");
       bindSeg("statusSeg", "status", "data-status");
       $("list").addEventListener("click", function (e) {
