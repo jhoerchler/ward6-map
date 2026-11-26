@@ -308,12 +308,12 @@
   function paintFreshness() {
     var d = S.raw;
     if (!d) return;
-    var openNow = 0;
-    for (var i = 0; i < S.rows.length; i++) if (S.rows[i].open) openNow++;
+    // Only the freshness here. An all-time open count used to sit beside it,
+    // but it read as contradicting the list, which is scoped to the window.
     var stamp = d.live_at || d.built_at;
     var live = d.live_at && (Date.now() / 1000 - d.live_at) < 3600;
     $("freshness").innerHTML = (live ? '<span class="live"></span>' : "") +
-      "Updated " + esc(ago(stamp)) + " · " + openNow.toLocaleString() + " open in " + esc(body.getAttribute("data-name") || "the area");
+      "Updated " + esc(ago(stamp));
   }
 
   function render(keepSel) {
