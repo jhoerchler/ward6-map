@@ -36,6 +36,9 @@
   function link(href, text) {
     return href ? '<a href="' + esc(href) + '" target="_blank" rel="noopener">' + esc(text) + "</a>" : "";
   }
+  function note(s) {
+    return String(s || "").replace(/\s*The bill text was changed:\s*/g, " ").replace(/\s+([.,;:])/g, "$1").trim();
+  }
   function group(b) { return (STATUS[b.status] || STATUS.pending).group; }
 
   // ------------------------------------------------------------- filters
@@ -80,7 +83,7 @@
         (b.effective ? ", effective " + esc(fmt(b.effective)) : "") +
         (b.vote ? " · final vote " + b.vote.aye + "–" + b.vote.no : "") + "</p>";
     } else if (b.last_step) {
-      last = '<p class="last"><strong>Latest:</strong> ' + esc(b.last_step) + (b.last_note ? ": " + esc(b.last_note) : "") +
+      last = '<p class="last"><strong>Latest:</strong> ' + esc(b.last_step) + (note(b.last_note) ? ": " + esc(note(b.last_note)) : "") +
         (b.last_date ? ' <span class="d">(' + esc(fmt(b.last_date)) + ")</span>" : "") + "</p>";
     }
     if (b.status === "died") last += '<p class="last">Not passed before the ' + esc(b.session) + " session ended.</p>";
@@ -96,7 +99,7 @@
     if (b.history && b.history.length) {
       hist = '<details class="hist"><summary>History (' + b.history.length + " steps)</summary><ol>" +
         b.history.map(function (h) {
-          return '<li><span class="d">' + esc(fmt(h.date)) + "</span> " + esc(h.step) + (h.note ? ": " + esc(h.note) : "") + "</li>";
+          return '<li><span class="d">' + esc(fmt(h.date)) + "</span> " + esc(h.step) + (note(h.note) ? ": " + esc(note(h.note)) : "") + "</li>";
         }).join("") + "</ol></details>";
     }
 
