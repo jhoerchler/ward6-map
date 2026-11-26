@@ -1,7 +1,8 @@
 # Rebuilds the ward map's data and republishes the site on GitHub Pages.
 #
-# Every two hours: the city's live API (last ~14 days) is re-read, so new
-# requests show up within a couple of hours. The 126 MB bulk export is only
+# Hourly (GitHub runs schedules on a best-effort basis and skips some, so
+# expect at least a few updates a day): the city's live API (last ~14 days)
+# is re-read. The 126 MB bulk export is only
 # re-downloaded once per day (cached between runs, keyed by date); if the
 # city's download fails, yesterday's cached copy is used instead.
 #
@@ -14,7 +15,7 @@ name: Update ward map
 
 on:
   schedule:
-    - cron: "17 */2 * * *"   # off the top of the hour, when Actions is busiest
+    - cron: "17 * * * *"     # hourly, off the top of the hour when Actions is busiest
   workflow_dispatch: {}      # "Run workflow" button
   push:
     branches: [main]

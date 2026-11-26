@@ -11,12 +11,14 @@ site/                         the static page GitHub Pages serves
   index.html, embed.js, embed.css (Leaflet loads from cdnjs)
 geodata/                      Ward 6 outline (simplified to ~2 m) + neighborhood names;
                               add other wards from QuickCSB geodata/wards.geojson
-.github/workflows/update.yml  rebuild + publish every two hours
+.github/workflows/update.yml  rebuild + publish (scheduled hourly)
 ```
 
 ## How the data stays current
 
-The workflow runs every two hours (at :17 past) and on every push to `main`:
+The workflow is scheduled hourly (at :17 past) and runs on every push to `main`.
+GitHub treats schedules as best effort and skips some runs, so the site promises
+only a daily update:
 
 1. Restores the city's 126 MB bulk export (`csb.zip`) from the Actions cache.
    It is downloaded fresh once a day; if the city's download fails, the last
