@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="theme-color" content="#032673">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>6th Ward truck restriction map</title>
+<meta name="description" content="Streets in St. Louis's 6th Ward, and citywide, where tractor-trailers and other commercial trucks are restricted by ordinance.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="trucks.css">
+</head>
+<!-- Truck restriction map, linked from the 6th Ward site. Data is a static
+     snapshot in trucks.json, built by sources/trucks/build_trucks.py from a
+     full-text scan of every ordinance online (1991 on), the Revised Code, city
+     street centerlines and OpenStreetMap. ?scope=city opens on the whole city. -->
+<body>
+
+<header class="bar">
+  <div class="bar-title">
+    <h1 id="title">6th Ward Truck Restrictions</h1>
+    <p class="sub" id="sub">Loading…</p>
+  </div>
+  <div class="seg" role="radiogroup" aria-label="Area shown">
+    <button type="button" role="radio" data-scope="ward" aria-checked="true">Ward 6</button>
+    <button type="button" role="radio" data-scope="city" aria-checked="false">Whole city</button>
+  </div>
+</header>
+
+<main class="mapwrap">
+  <div id="map" role="region" aria-label="Map of truck restrictions"></div>
+
+  <section class="legend" id="legend" aria-label="Legend">
+    <button type="button" class="legend-toggle" id="legendToggle" aria-expanded="true">Legend</button>
+    <div class="legend-body" id="legendBody">
+      <p class="legend-head">What is restricted</p>
+      <div id="legendItems" role="group" aria-label="Filter by restriction"></div>
+      <p class="legend-note">Tap a line or area for the ordinance. Tap a category to hide or show it.</p>
+      <details class="citywide" id="citywide">
+        <summary>Rules on every street</summary>
+        <ul id="citywideList"></ul>
+      </details>
+      <p class="legend-note disclaimer"><strong>Not a complete list.</strong> Every ordinance online (1991 on) was searched; older limits show only if they are still in the city code. The city also bans trucks on streets listed in a schedule it keeps on file but does not publish, so a posted sign can be the only record.</p>
+      <p class="legend-note"><a href="trucks.csv" download>Download the full list (CSV)</a></p>
+    </div>
+  </section>
+
+  <a class="cta" href="https://www.stlouis-mo.gov/government/departments/public-safety/neighborhood-stabilization-office/citizens-service-bureau/csb-request-submit.cfm" target="_blank" rel="noopener">Report a problem to the CSB</a>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="trucks.js"></script>
+</body>
+</html>
