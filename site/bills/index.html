@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="theme-color" content="#032673">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Alderwoman Daniela Velazquez: bill tracker</title>
+<meta name="description" content="Every Board of Aldermen bill sponsored or co-sponsored by 6th Ward Alderwoman Daniela Velazquez, and where each one stands. Updated automatically from the City of St. Louis.">
+<link rel="stylesheet" href="bills.css">
+</head>
+<!-- Bill tracker for the 6th Ward site. bills.json is rebuilt by bills.py in
+     the repo's GitHub Actions workflow from the Board of Aldermen's pages.
+     URL options: ?role=sponsor|cosponsor  ?status=pending|law|ended
+     ?session=2026-2027  ?q=search  ?embed=1 (drops the header bar) -->
+<body>
+
+<header class="bar" id="bar">
+  <div class="bar-title">
+    <h1>Daniela Velazquez's Bills</h1>
+    <p class="sub" id="sub">Loading…</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="stats" id="stats" aria-label="Totals"></section>
+
+  <section class="filters" aria-label="Filter bills">
+    <div class="seg" role="radiogroup" aria-label="Her role" id="roleSeg">
+      <button type="button" role="radio" data-role="all" aria-checked="true">All</button>
+      <button type="button" role="radio" data-role="sponsor" aria-checked="false">Sponsored</button>
+      <button type="button" role="radio" data-role="cosponsor" aria-checked="false">Co-sponsored</button>
+    </div>
+    <div class="seg" role="radiogroup" aria-label="Status" id="statusSeg">
+      <button type="button" role="radio" data-status="all" aria-checked="true">Any status</button>
+      <button type="button" role="radio" data-status="pending" aria-checked="false">In progress</button>
+      <button type="button" role="radio" data-status="law" aria-checked="false">Became law</button>
+      <button type="button" role="radio" data-status="ended" aria-checked="false">Did not pass</button>
+    </div>
+    <label class="sel">Session
+      <select id="session"><option value="all">All sessions</option></select>
+    </label>
+    <label class="search">
+      <span class="vh">Search bills</span>
+      <input type="search" id="q" placeholder="Search titles and summaries" autocomplete="off">
+    </label>
+  </section>
+
+  <p class="count" id="count" aria-live="polite"></p>
+  <ol class="list" id="list"></ol>
+
+  <footer class="foot">
+    <p id="updated"></p>
+    <p>Source: <a id="source" href="https://www.stlouis-mo.gov/government/city-laws/board-bills/by-sponsor.cfm" target="_blank" rel="noopener">St. Louis Board of Aldermen, board bills by sponsor</a>. Checked for changes several times a day. A bill that wasn't passed by the end of its session has to be reintroduced as a new bill.</p>
+  </footer>
+</main>
+
+<script src="bills.js"></script>
+</body>
+</html>

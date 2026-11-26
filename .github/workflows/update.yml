@@ -1,4 +1,5 @@
-# Rebuilds the ward map's data and republishes the site on GitHub Pages.
+# Rebuilds the ward map's data (and the bill tracker, bills.py) and
+# republishes the site on GitHub Pages.
 #
 # Hourly (GitHub runs schedules on a best-effort basis and skips some, so
 # expect at least a few updates a day): the city's live API (last ~14 days)
@@ -62,6 +63,11 @@ jobs:
           else
             python build.py --download
           fi
+
+      - name: Bill tracker (site/bills)
+        # Never blocks the map: on failure the page keeps its last copy.
+        continue-on-error: true
+        run: python bills.py
 
       - name: Save today's bulk export
         if: steps.zipcache.outputs.cache-hit != 'true' && hashFiles('cache/downloaded') != ''
