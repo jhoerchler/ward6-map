@@ -75,7 +75,7 @@
         cells += '<span class="' + (i <= b.stage ? "on" : "") + '"></span>';
         labels += "<span>" + STAGE_LABELS[i] + "</span>";
       }
-      prog = '<div class="prog" aria-label="Stage: ' + esc(STAGE_LABELS[b.stage]) + '">' + cells + '</div><div class="prog-l">' + labels + "</div>";
+      prog = '<div class="prog" aria-label="Stage: ' + esc(STAGE_LABELS[b.stage]) + '">' + cells + '</div><div class="prog-l">' + labels + '</div><div class="prog-now">Stage ' + (b.stage + 1) + " of " + STAGE_LABELS.length + ": " + esc(STAGE_LABELS[b.stage]) + "</div>";
     }
     var last = "";
     if (b.status === "law") {
@@ -97,7 +97,7 @@
 
     var hist = "";
     if (b.history && b.history.length) {
-      hist = '<details class="hist"><summary>History (' + b.history.length + " steps)</summary><ol>" +
+      hist = '<details class="hist"><summary>History (' + b.history.length + (b.history.length === 1 ? " step" : " steps") + ")</summary><ol>" +
         b.history.map(function (h) {
           return '<li><span class="d">' + esc(fmt(h.date)) + "</span> " + esc(h.step) + (note(h.note) ? ": " + esc(note(h.note)) : "") + "</li>";
         }).join("") + "</ol></details>";

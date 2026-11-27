@@ -99,9 +99,35 @@ details.hist .d { color: var(--muted); font-variant-numeric: tabular-nums; }
 .empty { background: #fff; padding: 20px; text-align: center; color: var(--muted); }
 .foot { margin-top: 18px; font-size: 12px; color: var(--muted); line-height: 1.45; }
 
+/* "Stage 2 of 6: Committee" under the arrows, shown on phones in place of
+   the six labels, which don't fit. */
+.prog-now { display: none; font-size: 12px; font-weight: 700; color: var(--navy); margin-top: 2px; }
+
+/* ------------------------------------------------------------- phone */
 @media (max-width: 640px) {
-  .stats { grid-template-columns: repeat(2, 1fr); }
-  .seg button { padding: 6px 8px; font-size: 12px; }
+  .bar { padding: 10px 12px; }
+  .bar h1 { font-size: 16px; }
+  .sub { font-size: 12px; }
+  .wrap { padding: 10px 10px 24px; }
+  .stats { grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 10px; }
+  .stat { padding: 7px 6px; border-top-width: 3px; text-align: center; }
+  .stat .n { font-size: 20px; }
+  .stat .l { font-size: 9px; letter-spacing: .02em; display: block; line-height: 1.2; }
+  .filters { gap: 6px; }
+  .seg { width: 100%; }
+  .seg button { flex: 1 1 0; padding: 8px 4px; font-size: 12px; line-height: 1.15; min-height: 38px; }
+  .sel { width: 100%; }
+  .sel select { flex: 1; padding: 7px 6px; }
+  .search { min-width: 0; width: 100%; flex: none; }
+  .search input { padding: 8px 10px; font-size: 16px; } /* 16px stops iOS zooming in */
+  .bill { padding: 10px 11px; }
+  .bill .top { font-size: 11px; gap: 4px 6px; }
   .bill h2 { font-size: 16px; }
+  .bill .sum { font-size: 13.5px; }
+  .prog span { height: 12px; }
   .prog-l { display: none; }
+  .prog-now { display: block; }
+  .links { gap: 6px 12px; }
+  .links a { padding: 4px 0; }
+  details.hist summary { padding: 4px 0; }
 }
